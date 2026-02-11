@@ -1,0 +1,506 @@
+@import "tailwindcss";
+
+/* ============================================
+   AVIX AI - DUAL THEME SYSTEM
+   Light (Frozen Glass) / Dark (Neon Liquid)
+   ============================================ */
+
+:root {
+  /* LIGHT MODE - Navy Glass (visible on white) */
+  --background: #cbd5e1;
+  /* Slate 300 - Less luminous white */
+  --foreground: #0f172a;
+  /* Slate 900 */
+
+  /* Card / Glass - Dark Navy tint for visibility */
+  --card-bg: rgba(255, 255, 255, 0.4);
+  /* Frosted glass effect */
+  --card-border: rgba(15, 23, 42, 0.2);
+  --glass-bg: rgba(255, 255, 255, 0.3);
+  --glass-border: rgba(15, 23, 42, 0.15);
+  --glass-blur: 24px;
+
+  /* Accent Colors - Blue Focus */
+  --cyan-glow: #0284c7;
+  /* Sky 600 */
+  --blue-glow: #2563eb;
+  /* Blue 600 */
+  --blue-dark: #1e40af;
+  /* Blue 800 */
+  --emerald-glow: #059669;
+  /* Emerald 600 */
+
+  /* Text */
+  --text-primary: #0f172a;
+  /* Slate 900 */
+  --text-secondary: #334155;
+  /* Slate 700 */
+  --text-muted: #64748b;
+  /* Slate 500 */
+
+  /* Sidebar - Off-White Glass */
+  --sidebar-bg: rgba(241, 245, 249, 0.95);
+  /* Slate 100 - Less luminous */
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  /* Neon Cyan border */
+  --sidebar-text: #0f172a;
+  /* Dark text for light bg */
+  --sidebar-text-muted: rgba(15, 23, 42, 0.6);
+  --neon-border: rgba(0, 212, 255, 0.5);
+  /* Neon for toggles */
+}
+
+.dark {
+  /* DARK MODE (Avix Luxury - Deep Obsidian) */
+  --background: #0B0F19;
+  /* Deep Obsidian Blue */
+  --foreground: #ffffff;
+  /* Pure White */
+
+  /* Card / Glass - Luxury Obsidian */
+  --card-bg: #111827;
+  --card-border: rgba(59, 130, 246, 0.1);
+  --glass-bg: #111827;
+  --glass-border: rgba(59, 130, 246, 0.1);
+  --glass-blur: 0px;
+  /* No blur needed with solid Obsidian */
+
+  /* Accent Colors - Sapphire Blue (Royal FinTech) */
+  --cyan-glow: #3B82F6;
+  /* Electric Blue */
+  --blue-glow: #2563EB;
+  /* Royal Blue 600 */
+  --blue-dark: #1E40AF;
+  /* Deep Blue 800 */
+  --emerald-glow: #4ade80;
+  /* Soft Green */
+
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: #9CA3AF;
+  /* Neutral Gray for labels */
+
+  /* Sidebar */
+  --sidebar-bg: #070A10;
+  /* Even darker Obsidian */
+  --sidebar-border: rgba(59, 130, 246, 0.08);
+  --sidebar-text: #ffffff;
+  --sidebar-text-muted: rgba(255, 255, 255, 0.5);
+  --neon-border: rgba(37, 99, 235, 0.3);
+  /* Royal Blue border */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* =============================================
+   DEEP GLASS LUXURY - AMBIENT LIGHTING + VIGNETTE
+   The "Deep" - Deep Ocean / Night Sky (No Pink/Purple)
+   ============================================= */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* VIGNETTE + SAPPHIRE GLOW - Deep Ocean feel */
+  background:
+    /* Vignette - Dark edges */
+    radial-gradient(ellipse 100% 100% at 50% 50%, transparent 30%, rgba(2, 6, 23, 0.85) 100%),
+    /* Center-bottom Deep Blue glow - THE HERO LIGHT */
+    radial-gradient(ellipse 60% 35% at 50% 95%, rgba(30, 64, 175, 0.15) 0%, transparent 70%),
+    /* Subtle secondary Royal Blue glow */
+    radial-gradient(ellipse 40% 30% at 60% 80%, rgba(37, 99, 235, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* =============================================
+   GHOST GLASS CARD - FinTech Aesthetics
+   Linear Gradient + Heavy Blur + Sapphire Glow
+   ============================================= */
+.glass-card {
+  /* GHOST GRADIENT - Almost invisible white fade */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+
+  /* HEAVY BLUR - The signature Ghost Glass effect */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  /* SAPPHIRE BORDER - Cool blue tint */
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  border-radius: 1rem;
+
+  /* SAPPHIRE GLOW - Royal blue halo */
+  box-shadow: 0 0 40px rgba(37, 99, 235, 0.05);
+}
+
+/* Luxury Padding Utility */
+.luxury-padding {
+  padding: 2rem;
+  /* 32px on desktop */
+}
+
+@media (max-width: 768px) {
+  .luxury-padding {
+    padding: 1rem;
+    /* 16px on mobile - Survival */
+  }
+}
+
+.glass-card-hover {
+  transition: all 0.3s ease;
+}
+
+.glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 8px 25px -5px rgba(0, 0, 0, 0.4),
+    0 4px 10px -3px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Glass Sidebar */
+.glass-sidebar {
+  background: var(--sidebar-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Neon Glow Effects */
+.neon-cyan {
+  color: var(--cyan-glow);
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.neon-blue {
+  color: var(--blue-glow);
+  text-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
+}
+
+.glow-cyan {
+  box-shadow:
+    0 0 5px rgba(0, 212, 255, 0.3),
+    0 0 15px rgba(0, 212, 255, 0.2),
+    0 0 30px rgba(0, 212, 255, 0.1);
+}
+
+.glow-blue {
+  box-shadow:
+    0 0 5px rgba(0, 102, 255, 0.3),
+    0 0 15px rgba(0, 102, 255, 0.2),
+    0 0 30px rgba(0, 102, 255, 0.1);
+}
+
+/* =============================================
+   FROSTED GLASS SIDEBAR
+   Seamless connection with Ghost Cards
+   ============================================= */
+.glass-sidebar {
+  /* Semi-transparent dark blue */
+  background: rgba(11, 15, 25, 0.4);
+
+  /* Heavy Blur - Match the cards */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  /* Sapphire Glass edge - Right border only */
+  border-right: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+/* Active Nav Link - Royal Blue Glass Highlight */
+.nav-active {
+  background: rgba(37, 99, 235, 0.15);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  box-shadow: 0 0 15px rgba(37, 99, 235, 0.2);
+}
+
+/* Pulsing Animation for Live Calls */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(34, 211, 238, 0.4),
+      0 0 10px rgba(34, 211, 238, 0.3),
+      0 0 20px rgba(34, 211, 238, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.6),
+      0 0 20px rgba(34, 211, 238, 0.4),
+      0 0 40px rgba(34, 211, 238, 0.3);
+  }
+}
+
+.pulse-live {
+  animation: pulse-glow 2s ease-in-out infinite;
+  border-color: var(--cyan-glow) !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Skeleton Loading Animation */
+@keyframes skeleton-pulse {
+
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.05) 100%);
+  background-size: 200% 100%;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  border-radius: 0.5rem;
+}
+
+/* Button Styles */
+.btn-primary {
+  background: linear-gradient(135deg, var(--cyan-glow), var(--blue-glow));
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 102, 255, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Input Styles */
+.glass-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--foreground);
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: var(--cyan-glow);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Badge Styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  border: 1px solid;
+}
+
+/* Tags */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  background: rgba(0, 102, 255, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(0, 102, 255, 0.3);
+  border-radius: 0.375rem;
+  text-transform: capitalize;
+}
+
+/* Chart Container */
+.chart-container {
+  width: 100%;
+  height: 300px;
+}
+
+/* Map Container */
+.map-container {
+  width: 100%;
+  height: 400px;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+/* Table Styles */
+.glass-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.glass-table th {
+  text-align: left;
+  padding: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-table td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.875rem;
+}
+
+.glass-table tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Staggered Animation */
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+
+.stagger-4 {
+  animation-delay: 0.4s;
+}
+
+/* ============================================
+   MOBILE-FIRST RESPONSIVE STYLES
+   ============================================ */
+
+/* iOS Safe Area Support */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Touch optimization for mobile */
+@media (max-width: 1023px) {
+
+  /* Larger touch targets */
+  button,
+  a {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+
+  /* Disable text selection on nav */
+  nav {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Smoother scrolling on mobile */
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent pull-to-refresh on iOS */
+  body {
+    overscroll-behavior-y: contain;
+  }
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid var(--cyan-glow);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+/* Hide focus ring on click/touch but show on keyboard nav */
+:focus:not(:focus-visible) {
+  outline: none;
+}
