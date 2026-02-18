@@ -13,6 +13,7 @@ import {
 } from 'recharts';
 import { supabase } from '@/lib/supabase/client';
 import { TagFrequency } from '@/lib/supabase/types';
+import { USE_MOCK_DATA, MOCK_TOPIC_DATA } from '@/lib/mock-data';
 
 
 export function TopicBarChart() {
@@ -21,7 +22,16 @@ export function TopicBarChart() {
 
     useEffect(() => {
         async function fetchData() {
+
+
             try {
+                if (USE_MOCK_DATA) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    setData(MOCK_TOPIC_DATA);
+                    setLoading(false);
+                    return;
+                }
+
                 const { data: calls, error } = await supabase
                     .from('calls')
                     .select('tags');

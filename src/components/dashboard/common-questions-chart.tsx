@@ -13,14 +13,24 @@ import {
 } from 'recharts';
 import { supabase } from '@/lib/supabase/client';
 import { CommonQuestion } from '@/lib/supabase/types';
+import { USE_MOCK_DATA, MOCK_COMMON_QUESTIONS } from '@/lib/mock-data';
 
 export function CommonQuestionsChart() {
     const [data, setData] = useState<CommonQuestion[]>([]);
     const [loading, setLoading] = useState(true);
 
+
+
     useEffect(() => {
         async function fetchData() {
             try {
+                if (USE_MOCK_DATA) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    setData(MOCK_COMMON_QUESTIONS);
+                    setLoading(false);
+                    return;
+                }
+
                 const { data: questions, error } = await supabase
                     .from('common_questions')
                     .select('*')

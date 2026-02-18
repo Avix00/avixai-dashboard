@@ -11,6 +11,7 @@ import {
 } from 'recharts';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
+import { USE_MOCK_DATA, MOCK_SENTIMENT_DATA } from '@/lib/mock-data';
 
 // Luxury: Softer/Desaturated Sentiment Colors (no "1990s traffic light")
 const SENTIMENT_COLORS: Record<string, { label: string; color: string }> = {
@@ -45,8 +46,23 @@ export function SentimentDonutChart() {
     };
 
     useEffect(() => {
+
+
         async function fetchData() {
             try {
+                if (USE_MOCK_DATA) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    const total = MOCK_SENTIMENT_DATA.reduce((acc, curr) => acc + curr.count, 0);
+                    // Map to satisfy ChartData type (needs index signature)
+                    const mappedData: ChartData[] = MOCK_SENTIMENT_DATA.map(item => ({
+                        ...item
+                    }));
+                    setData(mappedData);
+                    setTotal(total);
+                    setLoading(false);
+                    return;
+                }
+
                 const { data: calls, error } = await supabase
                     .from('calls')
                     .select('sentiment')

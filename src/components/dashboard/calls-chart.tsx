@@ -13,6 +13,7 @@ import {
 import { supabase } from '@/lib/supabase/client';
 import { DailyCallsData } from '@/lib/supabase/types';
 import { ChartSkeleton } from '@/components/shared/loading-skeleton';
+import { USE_MOCK_DATA, MOCK_DAILY_CALLS } from '@/lib/mock-data';
 
 export function CallsChart() {
     const [data, setData] = useState<DailyCallsData[]>([]);
@@ -20,7 +21,16 @@ export function CallsChart() {
 
     useEffect(() => {
         async function fetchData() {
+
+
             try {
+                if (USE_MOCK_DATA) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    setData(MOCK_DAILY_CALLS);
+                    setLoading(false);
+                    return;
+                }
+
                 // Get calls from last 7 days
                 const sevenDaysAgo = new Date();
                 sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);

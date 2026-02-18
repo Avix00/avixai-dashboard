@@ -19,6 +19,7 @@ import {
     getSentimentLabel,
     cn
 } from '@/lib/utils';
+import { USE_MOCK_DATA, MOCK_CALLS } from '@/lib/mock-data';
 
 // Mini inline audio player component
 function QuickAudioPlayer({ src }: { src: string }) {
@@ -91,11 +92,34 @@ export default function HistoryPage() {
         try {
             setLoading(true);
 
+
+
             let query = supabase
                 .from('calls')
                 .select('*')
                 .order('created_at', { ascending: false })
                 .range(pageIndex * pageSize, (pageIndex + 1) * pageSize - 1);
+
+            if (USE_MOCK_DATA) {
+                await new Promise(resolve => setTimeout(resolve, 600));
+                let filteredCalls = [...MOCK_CALLS];
+                if (sentimentFilter) {
+                    filteredCalls = filteredCalls.filter(c => c.sentiment === sentimentFilter);
+                }
+                const start = pageIndex * pageSize;
+                const end = start + pageSize;
+                const data = filteredCalls.slice(start, end);
+
+                if (data.length < pageSize) setHasMore(false);
+
+                if (isNewFilter || pageIndex === 0) {
+                    setCalls(data);
+                } else {
+                    setCalls((prev) => [...prev, ...data]);
+                }
+                setLoading(false);
+                return;
+            }
 
             if (sentimentFilter) {
                 query = query.eq('sentiment', sentimentFilter);

@@ -524,8 +524,15 @@ export default function AdminPage() {
                                 {users.map(user => (
                                     <tr key={user.id} className="hover:bg-white/5">
                                         <td className="px-4 py-4">
-                                            <p className="font-medium text-white">{user.company_name || 'N/A'}</p>
-                                            <p className="text-xs text-white/50">{user.user_id.slice(0, 8)}...</p>
+                                            {user.display_name ? (
+                                                <>
+                                                    <p className="font-medium text-white">{user.display_name}</p>
+                                                    <p className="text-xs text-white/50">{user.company_name}</p>
+                                                </>
+                                            ) : (
+                                                <p className="font-medium text-white">{user.company_name || 'N/A'}</p>
+                                            )}
+                                            <p className="text-[10px] text-white/30 font-mono mt-1">{user.user_id.slice(0, 8)}...</p>
                                         </td>
                                         <td className="px-4 py-4">
                                             <span className={cn(

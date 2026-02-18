@@ -35,7 +35,7 @@ export function MobileHeader() {
                         />
                         {/* Dark Mode Logo */}
                         <img
-                            src="/avix-logo-new.png"
+                            src="/avix-logo-login.png"
                             alt="Avix AI Logo"
                             className="w-full h-full object-contain hidden dark:block"
                         />

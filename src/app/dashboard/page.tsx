@@ -12,6 +12,7 @@ import { EmptyState } from '@/components/shared/empty-state';
 import { formatDuration } from '@/lib/utils';
 import { KPIData } from '@/lib/supabase/types';
 import { useFeatures } from '@/hooks/useFeatures';
+import { USE_MOCK_DATA, MOCK_KPI_DATA } from '@/lib/mock-data';
 
 export default function DashboardPage() {
     const [kpiData, setKpiData] = useState<KPIData | null>(null);
@@ -28,9 +29,18 @@ export default function DashboardPage() {
         officeHoursEnd
     } = useFeatures();
 
+
     useEffect(() => {
         async function fetchKPIs() {
             try {
+                if (USE_MOCK_DATA) {
+                    // Simulate network delay
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                    setKpiData(MOCK_KPI_DATA);
+                    setLoading(false);
+                    return;
+                }
+
                 // Get total calls count with created_at for out of hours calc
                 const { count: totalCalls, error: countError, data: allCalls } = await supabase
                     .from('calls')
