@@ -1,7 +1,7 @@
 import { Call, DailyCallsData, KPIData, TagFrequency, SentimentDistribution, CommonQuestion } from './supabase/types';
 
 // TOGGLE MOCK DATA HERE
-export const USE_MOCK_DATA = true;
+export const USE_MOCK_DATA = false;
 
 // Mock KPIs
 export const MOCK_KPI_DATA: KPIData = {
